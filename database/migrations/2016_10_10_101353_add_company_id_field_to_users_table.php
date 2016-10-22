@@ -14,7 +14,7 @@ class AddCompanyIdFieldToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('company_id')->after('remember_token');
+            $table->integer('company_id')->after('remember_token')->nullable();
         });
     }
 
