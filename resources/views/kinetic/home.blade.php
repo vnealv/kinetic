@@ -87,8 +87,9 @@
                                 <h2 class="wow fadeInUp animated" data-wow-delay=".6s" >
                                     With 10 years experience, I've occupied many roles including digital design director,<br> web designer and developer. This site showcases some of my work.
                                 </h2>-->
-                                <a class="btn-lines dark light wow fadeInUp animated smooth-scroll btn btn-default btn-green"
-                                   data-wow-delay=".9s" href="#works" data-section="#works">Read more about us</a>
+                                <a class="btn-lines btn"
+                                   href="{{ url('admin/login') }}">Login</a>
+
 
                     </div>
                 </div>
