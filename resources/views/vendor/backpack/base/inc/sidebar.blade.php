@@ -26,6 +26,7 @@
           <!-- ======================================= -->
           @if(Entrust::hasRole('admin'))
             <li class="header">Ad Entries</li>
+            <li><a href="{{ url('admin/entry') }}"><i class="fa fa-list-alt"></i> <span>Manage Entries</span></a></li>
             <li><a href="{{ url('admin/businesstype') }}"><i class="fa fa-users"></i> <span>Manage Business Types</span></a></li>
             <li><a href="{{ url('admin/adformat') }}"><i class="fa fa-street-view"></i> <span>Manage Ad Formats</span></a></li>
             <li><a href="{{ url('admin/state') }}"><i class="fa fa-list"></i> <span>Manage States</span></a></li>
