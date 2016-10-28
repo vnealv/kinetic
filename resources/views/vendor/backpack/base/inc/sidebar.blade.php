@@ -44,6 +44,8 @@
           <li><a href="{{ url('admin/company') }}"><i class="fa fa-industry"></i> <span>Manage Companies</span></a></li>
           @endif
           <!-- ======================================= -->
+          <li class="header">Map</li>
+          <li><a href="{{ url ('admin/map') }}"><span> Test Map </span></a> </li>
           <li class="header">{{ trans('backpack::base.user') }}</li>
           <li><a href="{{ url(config('backpack.base.route_prefix').'/logout') }}"><i class="fa fa-sign-out"></i> <span>{{ trans('backpack::base.logout') }}</span></a></li>
         </ul>
