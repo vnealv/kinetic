@@ -34,8 +34,9 @@ class SiteLocation extends Model
      * @param SiteLocation Object $location1
      * @param String $unit [meter | mile]
      */
-    public function distanceFrom(SiteLocation $location1, $unit = 'meter'){
-        switch ($unit){
+    public function distanceFrom(SiteLocation $location1, $unit = 'meter')
+    {
+        switch ($unit) {
             case 'meter':
                 $radius = 6371000;
                 break;
@@ -47,6 +48,24 @@ class SiteLocation extends Model
         }
 
         $results = $this->vincentyGreatCircleDistance($this->latitude, $this->longitude, $location1->latitude, $location1->longitude, $radius);
+        //this will round the number to two decimal places only.
+        return round((float)$results, 2);
+    }
+
+    public function distanceFrom2(SiteLocation $location1, $unit = 'km')
+    {
+        switch ($unit) {
+            case 'km':
+                $radius = 'Km';
+                break;
+            case 'mile':
+                $radius = 'Mi';
+                break;
+            default:
+                $radius = 'Mi';
+        }
+
+        $results = $this->getDistanceBetweenPointsNew($this->latitude, $this->longitude, $location1->latitude, $location1->longitude, $radius);
         //this will round the number to two decimal places only.
         return round((float)$results, 2);
     }
@@ -79,6 +98,23 @@ class SiteLocation extends Model
         return $angle * $earthRadius;
     }
 
+    function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longitude2, $unit = 'Mi')
+    {
+        $theta    = $longitude1 - $longitude2;
+        $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2)) + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta))));
+        $distance = acos($distance);
+        $distance = rad2deg($distance);
+        $distance = $distance * 60 * 1.1515;
+
+        switch ($unit) {
+            case 'Mi':
+                break;
+            case 'Km' :
+                $distance = $distance * 1.609344;
+        }
+        return (round($distance, 2));
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -94,6 +130,21 @@ class SiteLocation extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Scope a query to get near locations.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $distance in KM
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNearBy($query, $distance = 10)
+    {
+        return $query->select(\DB::raw(' * FROM (SELECT *, (((acos(sin(('.$this->latitude.'*pi()/180)) * sin((`latitude`*pi()/180))+cos(('.$this->latitude.'*pi()/180)) *cos((`latitude`*pi()/180)) * cos((('.$this->longitude.'-`longitude`)*pi()/180))))*180/pi())*60*1.1515*1.609344) as distance'))
+            ->from(\DB::raw('`site_locations`)myTable '))
+            ->where('distance', '<=', $distance);
+
+    }
 
     /*
     |--------------------------------------------------------------------------
