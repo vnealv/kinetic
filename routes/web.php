@@ -27,5 +27,7 @@ Route::group(['prefix'=> 'admin', 'middleware' => ['role:admin']], function () {
     CRUD::resource('sitelocation', 'Admin\SiteLocationCrudController');
     CRUD::resource('entry', 'Admin\EntryCrudController');
 
-    Route::get('map', 'Admin\MapController@index');
+    Route::get('site-deployment', 'Admin\MapController@index');
+
+//    Route::get('import', 'Admin\ImportDataController@import');
 });

@@ -21,7 +21,18 @@
           <!-- ================================================ -->
           <li><a href="{{ url(config('backpack.base.route_prefix').'/dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
 
-          <li><a href="{{ url('admin/elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>
+          {{--<li><a href="{{ url('admin/elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>--}}
+
+          <!-- ======================================= -->
+          {{--@if(Entrust::hasRole('admin'))--}}
+            <li class="header">MAIN</li>
+            <li><a href="{{ url('admin/site-deployment') }}"><i class="fa fa-map-o"></i> <span>Site Deployment</span></a></li>
+            <li><a href="{{ url('admin/entry') }}"><i class="fa fa-sitemap"></i> <span>Site Inventory</span></a></li>
+            <li><a href="{{ url('admin/elfinder') }}"><i class="fa fa-files-o"></i> <span>Competition</span></a></li>
+            <li><a href="{{ url('admin/dashboard') }}"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
+
+          {{--@endif--}}
+        <!-- ======================================= -->
 
           <!-- ======================================= -->
           @if(Entrust::hasRole('admin'))
@@ -44,8 +55,8 @@
           <li><a href="{{ url('admin/company') }}"><i class="fa fa-industry"></i> <span>Manage Companies</span></a></li>
           @endif
           <!-- ======================================= -->
-          <li class="header">Map</li>
-          <li><a href="{{ url ('admin/map') }}"><span> Test Map </span></a> </li>
+          {{--<li class="header">Map</li>--}}
+          {{--<li><a href="{{ url ('admin/map') }}"><span> Test Map </span></a> </li>--}}
           <li class="header">{{ trans('backpack::base.user') }}</li>
           <li><a href="{{ url(config('backpack.base.route_prefix').'/logout') }}"><i class="fa fa-sign-out"></i> <span>{{ trans('backpack::base.logout') }}</span></a></li>
         </ul>
