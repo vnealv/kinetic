@@ -34,5 +34,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function () 
 
     Route::post('dashboard/countTowns', 'Admin\DashboardController@countTowns');
     Route::post('dashboard/countStates', 'Admin\DashboardController@countStates');
-    Route::get('import', 'Admin\ImportDataController@import');
+
+//    Route::get('import', 'Admin\ImportDataController@import');
 });

@@ -229,7 +229,7 @@
                 },
                 success: function (data) {
                     countTownData = data.town_count;
-                    console.log(countTownData);
+//                    console.log(countTownData);
                     var townDtata_series = [{
                         name: 'States',
                         colorByPoint: true,
@@ -457,7 +457,7 @@
                                 console.log('Check names, missing index');
                         }
                     }
-                    console.log(townDtata_drilldown);
+//                    console.log(townDtata_drilldown);
                     stateTownBarChart(townDtata_series, townDtata_drilldown);
                 }
             });
