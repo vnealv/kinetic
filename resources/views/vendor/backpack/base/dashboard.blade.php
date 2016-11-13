@@ -157,7 +157,7 @@
                     var state, count;
                     for (var i = 0; i < countStateData.length; i++) {
                         state = countStateData[i].state.state;
-                        count = countStateData[i].state_count;
+                        count = parseInt(countStateData[i].state_count);
                         switch (state){
                             case 'Sabah':
                                 stateDtata[0].value = count;
@@ -370,7 +370,7 @@
                     for (var i = 0; i < countTownData.length; i++) {
                         state = countTownData[i].state.state;
                         town = countTownData[i].town.town;
-                        count = countTownData[i].town_count;
+                        count = parseInt(countTownData[i].town_count);
 //                        console.log('State: '+state +', Town:'+ town +', Count: '+count);
                         switch (state){
                             case 'Sabah':
