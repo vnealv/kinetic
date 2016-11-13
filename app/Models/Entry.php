@@ -32,19 +32,19 @@ class Entry extends Model
     public static function create(array $attributes = [])
     {
         if (!isset($attributes['rental']) && !isset($attributes['lighting']) && !isset($attributes['production']) && isset($attributes['costing'])) {
-            $costing = json_decode($attributes['costing'], true);
-            $attributes['rental'] = $costing[0]['rental'];
-            $attributes['lighting'] = $costing[0]['lighting'];
+            $costing                  = json_decode($attributes['costing'], true);
+            $attributes['rental']     = $costing[0]['rental'];
+            $attributes['lighting']   = $costing[0]['lighting'];
             $attributes['production'] = $costing[0]['production'];
             unset($attributes['costing']);
         }
 
-        if(isset($attributes['in_charge']) && isset($attributes['out_charge'])){
-            $in_charge = strtotime($attributes['in_charge']);
-            $out_charge = strtotime($attributes['out_charge']);
-            $attributes['duration'] =  floor(($out_charge - $in_charge) / (60 * 60 * 24));
-            $now = time();
-            $attributes['expiry'] = floor(($out_charge - $now) / (60 * 60 * 24));
+        if (isset($attributes['in_charge']) && isset($attributes['out_charge'])) {
+            $in_charge              = strtotime($attributes['in_charge']);
+            $out_charge             = strtotime($attributes['out_charge']);
+            $attributes['duration'] = floor(($out_charge - $in_charge) / (60 * 60 * 24));
+            $now                    = time();
+            $attributes['expiry']   = floor(($out_charge - $now) / (60 * 60 * 24));
         }
 
 
@@ -93,6 +93,29 @@ class Entry extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    public function scopeCountState($query, $company_id)
+    {
+        return $query->select(\DB::raw('count(*) as state_count, state_id'))->where('company_id', $company_id)->groupBy('state_id')->orderBy('state_count', 'desc')->with('state');
+    }
+
+    public function scopeCountTown($query, $company_id, $state = 0)
+    {
+        if ($state) {
+            return $query->select(\DB::raw('count(*) as town_count, state_id, town_id'))->where('company_id', $company_id)->where('state_id', $state)->groupBy('state_id', 'town_id')->orderBy('state_id', 'desc')->with(['state', 'town']);
+        }
+        return $query->select(\DB::raw('count(*) as town_count, state_id, town_id'))->where('company_id', $company_id)->groupBy('state_id', 'town_id')->orderBy('state_id', 'desc')->with(['state', 'town']);
+
+
+    }
+
+    public function scopeCountBusinessType($query, $company_id)
+    {
+        return $query->select(\DB::raw('count(*) as bt_count, business_type_id'))->where('company_id', $company_id)->groupBy('business_type_id')->orderBy('bt_count', 'desc')->with('businessType');
+    }
+
+
+
 
     /*
     |--------------------------------------------------------------------------

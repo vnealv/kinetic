@@ -15,7 +15,10 @@ Route::get('/', function () {
     return view('kinetic.home');
 });
 
-Route::group(['prefix'=> 'admin', 'middleware' => ['role:admin']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function () {
+    Route::get('/', 'AdminController@redirect');
+    Route::get('dashboard', 'AdminController@dashboard');
+
     CRUD::resource('company', 'Admin\CompanyCrudController');
     CRUD::resource('role', 'Admin\RoleCrudController');
     CRUD::resource('permission', 'Admin\PermissionCrudController');
@@ -29,5 +32,7 @@ Route::group(['prefix'=> 'admin', 'middleware' => ['role:admin']], function () {
 
     Route::get('site-deployment', 'Admin\MapController@index');
 
-//    Route::get('import', 'Admin\ImportDataController@import');
+    Route::post('dashboard/countTowns', 'Admin\DashboardController@countTowns');
+    Route::post('dashboard/countStates', 'Admin\DashboardController@countStates');
+    Route::get('import', 'Admin\ImportDataController@import');
 });
