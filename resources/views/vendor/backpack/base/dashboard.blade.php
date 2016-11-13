@@ -457,6 +457,7 @@
                                 console.log('Check names, missing index');
                         }
                     }
+                    console.log("TOWN DATA SERIES");
                     console.log(townDtata_series);
                     stateTownBarChart(townDtata_series, townDtata_drilldown);
                 }
